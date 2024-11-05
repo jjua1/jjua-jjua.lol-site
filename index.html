@@ -1,77 +1,58 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>쭈아 내전시트</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <!-- Google Fonts 모양 가져온것 -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* 전체 배경 설정 */
-    body {
-      background: linear-gradient(to right, #ff7e5f, #feb47b); /* 그라디언트 배경 */
-      font-family: 'Roboto', sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* 네비게이션 바 */
-    #admin {
-      position: fixed;
-      top: 0;
-      left: 0;
+    table {
       width: 100%;
-      background-color: #333;
-      padding: 15px 0;
-      z-index: 100;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-family: 'Roboto', sans-serif; /* 기본 폰트 */
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2; /* 표 맨윗줄 배경색*/
+    }
+    .container { /*배경 여백*/
+      border: 2px #ddd;
+      margin: 20px;
+      padding: 20px;
+      background: white;
+      font-family: 'Roboto', sans-serif; /* 기본 폰트 */
+    }
+    #admin {
+      background: #e5aaa3;
+      padding: 10px;
+      font-family: 'Poppins', sans-serif; /* 네비게이션 폰트 */
     }
 
     #admin ul {
       margin: 0;
       padding: 0;
       display: flex;
-      justify-content: center;
+      justify-content: center; /* 가운데 정렬 */
     }
 
     #admin ul li {
-      list-style: none;
-      padding: 0 20px;
+      list-style-type: none; 
+      padding: 0 15px;
+      cursor: pointer;
     }
 
     #admin ul li a {
+      font-size: 30px;
       color: white;
-      font-size: 20px;
       text-decoration: none;
-      font-family: 'Poppins', sans-serif;
-      padding: 10px 15px;
-      border-radius: 5px;
-      transition: background 0.3s ease;
+      font-family: 'Poppins', sans-serif; /* 네비게이션 폰트 */
     }
 
-    #admin ul li a:hover {
-      background-color: #ff7e5f;
-    }
-
-    /* 컨테이너 */
-    .container {
-      margin: 80px auto 20px;
-      padding: 20px;
-      background: white;
-      width: 90%;
-      max-width: 1200px;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
-    }
-
-    /* 섹션 제목 스타일 */
-    h2 {
-      text-align: center;
-      font-size: 28px;
-      margin-bottom: 20px;
-      color: #333;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    /* 탭 스타일 */
+    /* Tab 스타일 */
     .tab-container {
       display: flex;
       justify-content: center;
@@ -79,143 +60,72 @@
     }
 
     .tab {
-      padding: 12px 25px;
+      padding: 10px 20px;
       margin-right: 10px;
       cursor: pointer;
-      background: linear-gradient(135deg, #ff7e5f, #feb47b);
-      border: none;
-      border-radius: 30px;
-      color: white;
-      font-weight: bold;
-      transition: background 0.3s ease, transform 0.3s ease;
-    }
-
-    .tab:hover {
-      background: linear-gradient(135deg, #feb47b, #ff7e5f);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      background-color: #f2f2f2;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: 'Poppins', sans-serif; /* 탭에 Poppins 적용 */
     }
 
     .tab.active {
-      background: #ff7e5f;
+      background-color: #e5aaa3;
       color: white;
     }
 
-    /* 검색 입력 스타일 */
+    /* 페이지 전환을 위한 CSS */
+    .page {
+      display: none;
+    }
+
+    .active-page {
+      display: block;
+    }
+
+    /* 검색 입력란 스타일 */
     .search-box {
       margin-bottom: 20px;
       text-align: center;
     }
 
     .search-box input {
-      padding: 12px;
+      padding: 8px;
       font-size: 16px;
       width: 50%;
       max-width: 400px;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    /* 테이블 스타일 */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      background-color: #fff;
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border: 1px solid #ddd;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-
-    tbody tr:nth-child(even) {
-      background-color: #f9f9f9; /* 짝수 행 배경색 */
+      font-family: 'Lora', serif; /* 검색 박스에 Lora 적용 */
     }
 
     tbody tr:hover {
-      background-color: #ffe4e1; /* 행에 마우스 올릴 때 색 */
+      background: pink;
     }
-
-    /* 반응형 디자인 */
-    @media (max-width: 768px) {
-      .tab-container {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .search-box input {
-        width: 100%;
-      }
-
-      .container {
-        padding: 10px;
-      }
+    
+    h2 { /*소제목 스타일 수정!!*/
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+      font-family: 'Poppins', sans-serif; /* 제목에 Poppins 적용 */
     }
-
-    /* 모달 팝업 스타일 */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.4); /* 배경 */
-      padding-top: 60px;
-    }
-
-    .modal-content {
-      background-color: #fff;
-      margin: 5% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: black;
-    }
-
   </style>
 </head>
 <body>
 
-  <!-- 네비게이션 바 -->
   <nav id="admin">
     <ul>
       <li><a href="#">쭈아 내전시트</a></li>
     </ul>
   </nav>
 
-  <!-- 컨테이너 -->
+
   <div class="container">
     <!-- 통계 페이지 -->
     <div id="statsPage" class="page active-page">
       <h2>통계</h2>
-
-      <div class="tab-container">
-        <div class="tab active" id="statsTab" onclick="showPage('statsPage')">통계</div>
-        <div class="tab" id="championTab" onclick="showPage('championPage')">챔피언 통계</div>
-      </div>
-
+  <div class="tab-container">
+    <div class="tab" id="statsTab" onclick="showPage('statsPage')">통계</div>
+    <div class="tab" id="championTab" onclick="showPage('championPage')">챔피언 통계</div>
+  </div>
       <div class="search-box">
         <input type="text" id="statsSearch" placeholder="통계 검색..." onkeyup="filterTable('statsTable', 'statsSearch')">
       </div>
@@ -225,12 +135,10 @@
     <!-- 챔피언 통계 페이지 -->
     <div id="championPage" class="page">
       <h2>챔피언 통계</h2>
-
-      <div class="tab-container">
-        <div class="tab" id="statsTab" onclick="showPage('statsPage')">통계</div>
-        <div class="tab active" id="championTab" onclick="showPage('championPage')">챔피언 통계</div>
-      </div>
-
+  <div class="tab-container">
+    <div class="tab" id="statsTab" onclick="showPage('statsPage')">통계</div>
+    <div class="tab" id="championTab" onclick="showPage('championPage')">챔피언 통계</div>
+  </div>
       <div class="search-box">
         <input type="text" id="championSearch" placeholder="챔피언 통계 검색..." onkeyup="filterTable('championTable', 'championSearch')">
       </div>
@@ -238,33 +146,105 @@
     </div>
   </div>
 
-  <!-- 모달 팝업 (데이터 세부 정보 보기용) -->
-  <div id="myModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>세부 정보</h2>
-      <p id="modalText">여기에 세부 정보가 표시됩니다.</p>
-    </div>
-  </div>
-
   <script>
     // 페이지 전환 함수
     function showPage(pageId) {
+      // 모든 페이지 숨기기
       var pages = document.querySelectorAll('.page');
       pages.forEach(function(page) {
         page.classList.remove('active-page');
       });
 
+      // 선택된 페이지 보이기
       var page = document.getElementById(pageId);
       page.classList.add('active-page');
 
+      // 모든 탭에서 'active' 클래스 제거
       var tabs = document.querySelectorAll('.tab');
       tabs.forEach(function(tab) {
         tab.classList.remove('active');
       });
 
+      // 클릭된 탭에 'active' 클래스 추가
       var activeTab = document.getElementById(pageId + 'Tab');
       activeTab.classList.add('active');
+    }
+
+    // 테이블 생성 함수
+    function createTable(data, tableId) {
+      var table = document.getElementById(tableId);
+      table.innerHTML = "";  // 기존 테이블 내용 지우기
+      var thead = table.createTHead();
+      var tbody = table.createTBody();
+      var merges = data.merges;
+      var formats = data.formats;
+
+      // 테이블 헤더 생성
+      var headerRow = thead.insertRow();
+      data.data[0].forEach(function(header) {
+        var th = document.createElement("th");
+        th.appendChild(document.createTextNode(header));
+        headerRow.appendChild(th);
+      });
+
+      // 테이블 데이터 생성
+      for (var i = 1; i < data.data.length; i++) {
+        var row = tbody.insertRow();
+        for (var j = 0; j < data.data[i].length; j++) {
+          if (!isMergedCell(i + 1, j + 1, merges)) {
+            var cell = row.insertCell();
+            var mergeInfo = getMergeInfo(i + 1, j + 1, merges);
+            if (mergeInfo) {
+              cell.rowSpan = mergeInfo.rowSpan;
+              cell.colSpan = mergeInfo.colSpan;
+            }
+            // % 형식 적용
+            if (formats[i][j] === "0.00%" && i >= 2) {
+              cell.appendChild(document.createTextNode((data.data[i][j] * 100).toFixed(2) + "%"));
+            } else {
+              cell.appendChild(document.createTextNode(data.data[i][j]));
+            }
+          }
+        }
+      }
+    }
+
+    // 병합된 셀 확인
+    function isMergedCell(row, col, merges) {
+      for (var k = 0; k < merges.length; k++) {
+        var merge = merges[k];
+        if (row >= merge.row && row < merge.row + merge.numRows &&
+            col >= merge.column && col < merge.column + merge.numColumns) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // 병합 정보 반환
+    function getMergeInfo(row, col, merges) {
+      for (var k = 0; k < merges.length; k++) {
+        var merge = merges[k];
+        if (row == merge.row && col == merge.column) {
+          return { rowSpan: merge.numRows, colSpan: merge.numColumns };
+        }
+      }
+      return null;
+    }
+
+    // 데이터 로드 함수
+    function loadData() {
+      // 통계 데이터 불러오기
+      fetch('stats.json')
+        .then(response => response.json())
+        .then(data => createTable(data, 'statsTable'))
+        .catch(error => console.error('Error loading stats data:', error));
+
+      // 챔피언통계 데이터 불러오기
+      fetch('champion.json')
+        .then(response => response.json())
+        .then(data => createTable(data, 'championTable'))
+        .catch(error => console.error('Error loading champion data:', error));
     }
 
     // 테이블 필터링 함수
@@ -275,3 +255,30 @@
       var rows = table.getElementsByTagName("tr");
 
       for (var i = 1; i < rows.length; i++) {
+        var cells = rows[i].getElementsByTagName("td");
+        var match = false;
+
+        for (var j = 0; j < cells.length; j++) {
+          if (cells[j]) {
+            var cellText = cells[j].textContent || cells[j].innerText;
+            if (cellText.toLowerCase().indexOf(filter) > -1) {
+              match = true;
+              break;
+            }
+          }
+        }
+
+        // 검색어와 일치하는 셀이 있으면 해당 행을 보이게 함
+        if (match) {
+          rows[i].style.display = "";
+        } else {
+          rows[i].style.display = "none";
+        }
+      }
+    }
+
+    // 페이지 로드 시 데이터 로드
+    window.onload = loadData;
+  </script>
+</body>
+</html>
