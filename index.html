@@ -234,4 +234,49 @@
               cell.colSpan = mergeInfo.colSpan;
             }
             if (formats[i][j] === "0.00%" && i >= 2) {
-              
+              cell.appendChild(document.createTextNode((data.data[i][j] * 100).toFixed(2) + "%"));
+            } else {
+              cell.appendChild(document.createTextNode(data.data[i][j]));
+            }
+          }
+        }
+      }
+    }
+
+    function isMergedCell(row, col, merges) {
+      for (var k = 0; k < merges.length; k++) {
+        var merge = merges[k];
+        if (row >= merge.row && row < merge.row + merge.numRows &&
+            col >= merge.column && col < merge.column + merge.numColumns) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function getMergeInfo(row, col, merges) {
+      for (var k = 0; k < merges.length; k++) {
+        var merge = merges[k];
+        if (row == merge.row && col == merge.column) {
+          return { rowSpan: merge.numRows, colSpan: merge.numColumns };
+        }
+      }
+      return null;
+    }
+
+    function loadData() {
+      fetch('stats.json')
+        .then(response => response.json())
+        .then(data => createTable(data, 'statsTable'))
+        .catch(error => console.error('Error loading stats data:', error));
+
+      fetch('champion.json')
+        .then(response => response.json())
+        .then(data => createTable(data, 'championTable'))
+        .catch(error => console.error('Error loading champion data:', error));
+    }
+
+    window.onload = loadData;
+  </script>
+</body>
+</html>
