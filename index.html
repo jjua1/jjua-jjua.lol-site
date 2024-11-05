@@ -152,6 +152,36 @@
         .catch(error => console.error('Error loading champion data:', error));
     }
 
+    function filterTable(tableId, searchId) {
+      var input = document.getElementById(searchId);
+      var filter = input.value.toLowerCase();
+      var table = document.getElementById(tableId);
+      var rows = table.getElementsByTagName("tr");
+
+      // 테이블의 모든 행을 순차적으로 확인
+      for (var i = 1; i < rows.length; i++) {
+        var cells = rows[i].getElementsByTagName("td");
+        var match = false;
+
+        // 각 셀의 내용을 확인
+        for (var j = 0; j < cells.length; j++) {
+          if (cells[j]) {
+            var cellText = cells[j].textContent || cells[j].innerText;
+            if (cellText.toLowerCase().indexOf(filter) > -1) {
+              match = true;
+              break; // 검색어와 일치하는 셀이 있으면 해당 행을 보이게 함
+            }
+          }
+        }
+
+        // 일치하는 셀이 있으면 행을 표시하고, 없으면 숨김
+        if (match) {
+          rows[i].style.display = "";
+        } else {
+          rows[i].style.display = "none";
+        }
+      }
+    }
     window.onload = loadData;  // 페이지 로드 시 데이터 불러오기
   </script>
 </body>
