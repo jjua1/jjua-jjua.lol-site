@@ -231,7 +231,19 @@
       }
       return null;
     }
+  function loadData() {
+      // 통계 데이터 불러오기
+      fetch('stats.json')
+        .then(response => response.json())
+        .then(data => createTable(data, 'statsTable'))
+        .catch(error => console.error('Error loading stats data:', error));
 
+      // 챔피언통계 데이터 불러오기
+      fetch('champion.json')
+        .then(response => response.json())
+        .then(data => createTable(data, 'championTable'))
+        .catch(error => console.error('Error loading champion data:', error));
+    }
     // 데이터 로드 함수
     async function loadData() {
       // 구글 드라이브에서 통계 데이터 불러오기
