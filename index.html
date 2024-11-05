@@ -233,17 +233,23 @@
       return null;
     }
   function loadData() {
-      // 통계 데이터 불러오기
-      fetch('stats.json')
-        .then(response => response.json())
-        .then(data => createTable(data, 'statsTable'))
-        .catch(error => console.error('Error loading stats data:', error));
+  // 통계 JSON 파일 URL
+  const statsFileUrl = 'https://drive.google.com/uc?id=1KrnvzoCQM0wziCph767svXoX1-hpb7MI';
+  
+  // 챔피언 통계 JSON 파일 URL
+  const championFileUrl = 'https://drive.google.com/uc?id=1kHGwL9Gw3gy6L4jnq8sdq7k3ItZ1avBO';
 
-      // 챔피언통계 데이터 불러오기
-      fetch('champion.json')
-        .then(response => response.json())
-        .then(data => createTable(data, 'championTable'))
-        .catch(error => console.error('Error loading champion data:', error));
+      // 통계 데이터 불러오기
+  fetch(statsFileUrl)
+    .then(response => response.json())
+    .then(data => createTable(data, 'statsTable'))
+    .catch(error => console.error('Error loading stats data:', error));
+
+  // 챔피언 통계 데이터 불러오기
+  fetch(championFileUrl)
+    .then(response => response.json())
+    .then(data => createTable(data, 'championTable'))
+    .catch(error => console.error('Error loading champion data:', error));
     }
    
     // 테이블 필터링 함수
