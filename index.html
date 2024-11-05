@@ -23,11 +23,36 @@
             padding: 20px;
             background: white ;
         }
+    #admin {
+            background: #e5aaa3;
+            padding: 10px; 
+        }
+
+        #admin ul {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start; /* 왼쪽 정렬 */
+        }
+
+        #admin ul li {
+            list-style-type: none; 
+            padding: 0 15px; 
+        }
+
+        #admin ul li a {
+            font-size: 30px; /* 메인 폰트 크기  */
+            color: white;
+            text-decoration: none;
+        }
   </style>
 </head>
-<body>
+<body><nav id="admin">
+        <ul>
+            <li><a href="#">쭈아 내전시트</a></li>
+        </ul>
+    </nav>
   <div class="container">
-  <h1>쭈아 내전시트</h1>
   <h2>통계</h2>
   <table id="statsTable"></table>
   <h2>챔피언통계</h2>
