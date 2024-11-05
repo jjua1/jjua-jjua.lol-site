@@ -45,10 +45,14 @@
             color: white;
             text-decoration: none;
         }
-    tbody tr:hover { /*마우스 가져다 되었을때 효과 주는것!!*/
+    tbody tr:nth-child(even) {/*짝수 줄 마다 색 변경!!*/
+            background: solid black;
+        }
+    
+     tbody tr:hover { /*마우스 가져다 되었을때 효과 주는것!!*/
             background: pink;
         }
-        .search-box {
+        .search-box { /*검색창*/
       margin-bottom: 20px;
       text-align: center;
     }
