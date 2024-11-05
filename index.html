@@ -149,6 +149,12 @@
       margin-bottom: 20px;
       color: #e5aaa3;
     }
+
+    /* 테이블에 스크롤 추가 */
+    .table-wrapper {
+      overflow-x: auto;
+      max-width: 100%; /* 화면을 넘지 않게 설정 */
+    }
   </style>
 </head>
 <body>
@@ -170,7 +176,9 @@
       <div class="search-box">
         <input type="text" id="statsSearch" placeholder="통계 검색..." onkeyup="filterTable('statsTable', 'statsSearch')">
       </div>
-      <table id="statsTable"></table>
+      <div class="table-wrapper">
+        <table id="statsTable"></table>
+      </div>
     </div>
 
     <!-- 챔피언 통계 페이지 -->
@@ -183,7 +191,9 @@
       <div class="search-box">
         <input type="text" id="championSearch" placeholder="챔피언 통계 검색..." onkeyup="filterTable('championTable', 'championSearch')">
       </div>
-      <table id="championTable"></table>
+      <div class="table-wrapper">
+        <table id="championTable"></table>
+      </div>
     </div>
   </div>
 
