@@ -62,7 +62,6 @@
       display: flex;
       justify-content: center;
       margin-bottom: 20px;
-      border-bottom: 2px solid #ddd;
     }
 
     .tab {
@@ -182,6 +181,7 @@
         <div class="tab" id="statsTab" onclick="showPage('statsPage')">통계</div>
         <div class="tab" id="championTab" onclick="showPage('championPage')">챔피언 통계</div>
       </div>
+
       <div class="search-box">
         <input type="text" id="statsSearch" placeholder="통계 검색..." onkeyup="filterTable('statsTable', 'statsSearch')">
       </div>
