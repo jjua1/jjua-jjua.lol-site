@@ -2,14 +2,14 @@
 <html>
 <head>
   <title>쭈아 내전시트</title>
-  <!-- Google Fonts 모양 가져온것 -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    /* 기존 스타일 */
     table {
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 20px;
-      font-family: 'Roboto', sans-serif; /* 기본 폰트 */
+      font-family: 'Roboto', sans-serif;
     }
     th, td {
       border: 1px solid black;
@@ -17,30 +17,30 @@
       text-align: left;
     }
     th {
-      background-color: #f2f2f2; /* 표 맨윗줄 배경색*/
+      background-color: #f2f2f2;
     }
-    .container { /*배경 여백*/
+    .container {
       border: 2px #ddd;
       margin: 20px;
       padding: 20px;
       background: white;
-      font-family: 'Roboto', sans-serif; /* 기본 폰트 */
+      font-family: 'Roboto', sans-serif;
     }
     #admin {
       background: #e5aaa3;
       padding: 10px;
-      font-family: 'Poppins', sans-serif; /* 네비게이션 폰트 */
+      font-family: 'Poppins', sans-serif;
     }
 
     #admin ul {
       margin: 0;
       padding: 0;
       display: flex;
-      justify-content: center; /* 가운데 정렬 */
+      justify-content: center;
     }
 
     #admin ul li {
-      list-style-type: none; 
+      list-style-type: none;
       padding: 0 15px;
       cursor: pointer;
     }
@@ -49,10 +49,9 @@
       font-size: 30px;
       color: white;
       text-decoration: none;
-      font-family: 'Poppins', sans-serif; /* 네비게이션 폰트 */
+      font-family: 'Poppins', sans-serif;
     }
 
-    /* Tab 스타일 */
     .tab-container {
       display: flex;
       justify-content: center;
@@ -66,7 +65,7 @@
       background-color: #f2f2f2;
       border: 1px solid #ccc;
       border-radius: 5px;
-      font-family: 'Poppins', sans-serif; /* 탭에 Poppins 적용 */
+      font-family: 'Poppins', sans-serif;
     }
 
     .tab.active {
@@ -74,7 +73,6 @@
       color: white;
     }
 
-    /* 페이지 전환을 위한 CSS */
     .page {
       display: none;
     }
@@ -83,7 +81,6 @@
       display: block;
     }
 
-    /* 검색 입력란 스타일 */
     .search-box {
       margin-bottom: 20px;
       text-align: center;
@@ -94,18 +91,18 @@
       font-size: 16px;
       width: 50%;
       max-width: 400px;
-      font-family: 'Lora', serif; /* 검색 박스에 Lora 적용 */
+      font-family: 'Lora', serif;
     }
 
     tbody tr:hover {
       background: pink;
     }
     
-    h2 { /*소제목 스타일 수정!!*/
+    h2 {
       text-align: center;
       font-size: 24px;
       margin-bottom: 20px;
-      font-family: 'Poppins', sans-serif; /* 제목에 Poppins 적용 */
+      font-family: 'Poppins', sans-serif;
     }
   </style>
 </head>
@@ -117,28 +114,25 @@
     </ul>
   </nav>
 
-
   <div class="container">
-    <!-- 통계 페이지 -->
     <div id="statsPage" class="page active-page">
       <h2>통계</h2>
-  <div class="tab-container">
-    <div class="tab" id="statsTab" onclick="showPage('statsPage')">통계</div>
-    <div class="tab" id="championTab" onclick="showPage('championPage')">챔피언 통계</div>
-  </div>
+      <div class="tab-container">
+        <div class="tab" id="statsTab" onclick="showPage('statsPage')">통계</div>
+        <div class="tab" id="championTab" onclick="showPage('championPage')">챔피언 통계</div>
+      </div>
       <div class="search-box">
         <input type="text" id="statsSearch" placeholder="통계 검색..." onkeyup="filterTable('statsTable', 'statsSearch')">
       </div>
       <table id="statsTable"></table>
     </div>
 
-    <!-- 챔피언 통계 페이지 -->
     <div id="championPage" class="page">
       <h2>챔피언 통계</h2>
-  <div class="tab-container">
-    <div class="tab" id="statsTab" onclick="showPage('statsPage')">통계</div>
-    <div class="tab" id="championTab" onclick="showPage('championPage')">챔피언 통계</div>
-  </div>
+      <div class="tab-container">
+        <div class="tab" id="statsTab" onclick="showPage('statsPage')">통계</div>
+        <div class="tab" id="championTab" onclick="showPage('championPage')">챔피언 통계</div>
+      </div>
       <div class="search-box">
         <input type="text" id="championSearch" placeholder="챔피언 통계 검색..." onkeyup="filterTable('championTable', 'championSearch')">
       </div>
@@ -149,23 +143,19 @@
   <script>
     // 페이지 전환 함수
     function showPage(pageId) {
-      // 모든 페이지 숨기기
       var pages = document.querySelectorAll('.page');
       pages.forEach(function(page) {
         page.classList.remove('active-page');
       });
 
-      // 선택된 페이지 보이기
       var page = document.getElementById(pageId);
       page.classList.add('active-page');
 
-      // 모든 탭에서 'active' 클래스 제거
       var tabs = document.querySelectorAll('.tab');
       tabs.forEach(function(tab) {
         tab.classList.remove('active');
       });
 
-      // 클릭된 탭에 'active' 클래스 추가
       var activeTab = document.getElementById(pageId + 'Tab');
       activeTab.classList.add('active');
     }
@@ -173,13 +163,12 @@
     // 테이블 생성 함수
     function createTable(data, tableId) {
       var table = document.getElementById(tableId);
-      table.innerHTML = "";  // 기존 테이블 내용 지우기
+      table.innerHTML = ""; 
       var thead = table.createTHead();
       var tbody = table.createTBody();
       var merges = data.merges;
       var formats = data.formats;
 
-      // 테이블 헤더 생성
       var headerRow = thead.insertRow();
       data.data[0].forEach(function(header) {
         var th = document.createElement("th");
@@ -187,7 +176,6 @@
         headerRow.appendChild(th);
       });
 
-      // 테이블 데이터 생성
       for (var i = 1; i < data.data.length; i++) {
         var row = tbody.insertRow();
         for (var j = 0; j < data.data[i].length; j++) {
@@ -198,7 +186,6 @@
               cell.rowSpan = mergeInfo.rowSpan;
               cell.colSpan = mergeInfo.colSpan;
             }
-            // % 형식 적용
             if (formats[i][j] === "0.00%" && i >= 2) {
               cell.appendChild(document.createTextNode((data.data[i][j] * 100).toFixed(2) + "%"));
             } else {
@@ -231,19 +218,22 @@
       }
       return null;
     }
-  function loadData() {
-      // 통계 데이터 불러오기
-      fetch('stats.json')
-        .then(response => response.json())
-        .then(data => createTable(data, 'statsTable'))
-        .catch(error => console.error('Error loading stats data:', error));
 
-      // 챔피언통계 데이터 불러오기
-      fetch('champion.json')
-        .then(response => response.json())
-        .then(data => createTable(data, 'championTable'))
-        .catch(error => console.error('Error loading champion data:', error));
+    // 구글 드라이브 링크에서 JSON 데이터를 불러오는 함수
+    async function fetchData(url) {
+      try {
+        let response = await fetch(url);
+        if (!response.ok) {
+          throw new Error('네트워크 응답이 실패했습니다.');
+        }
+        let data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('데이터 로드 중 오류 발생:', error);
+        return null;
+      }
     }
+
     // 데이터 로드 함수
     async function loadData() {
       // 구글 드라이브에서 통계 데이터 불러오기
@@ -253,7 +243,7 @@
         createTable(statsData, 'statsTable');
       }
 
-      // 구글 드라이브에서 챔피언통계 데이터 불러오기
+      // 구글 드라이브에서 챔피언 통계 데이터 불러오기
       let championUrl = "https://drive.google.com/uc?id=1Nu488yacZbRgd8c2lNHY_wv5GJ2xKSPw&export=download";  // 구글 드라이브 JSON 링크
       let championData = await fetchData(championUrl);
       if (championData) {
@@ -261,38 +251,11 @@
       }
     }
 
-    // 테이블 필터링 함수
-    function filterTable(tableId, searchId) {
-      var input = document.getElementById(searchId);
-      var filter = input.value.toLowerCase();
-      var table = document.getElementById(tableId);
-      var rows = table.getElementsByTagName("tr");
-
-      for (var i = 1; i < rows.length; i++) {
-        var cells = rows[i].getElementsByTagName("td");
-        var match = false;
-
-        for (var j = 0; j < cells.length; j++) {
-          if (cells[j]) {
-            var cellText = cells[j].textContent || cells[j].innerText;
-            if (cellText.toLowerCase().indexOf(filter) > -1) {
-              match = true;
-              break;
-            }
-          }
-        }
-
-        // 검색어와 일치하는 셀이 있으면 해당 행을 보이게 함
-        if (match) {
-          rows[i].style.display = "";
-        } else {
-          rows[i].style.display = "none";
-        }
-      }
-    }
-
-    // 페이지 로드 시 데이터 로드
-    window.onload = loadData;
+    // 페이지 로드 후 데이터 로드
+    window.onload = function() {
+      loadData();
+    };
   </script>
+
 </body>
 </html>
