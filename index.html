@@ -14,83 +14,144 @@
       text-align: left;
     }
     th {
-      background-color: #f2f2f2; /* 표 맨윗줄 배경색!*/
+      background-color: #f2f2f2; /* 표 맨윗줄 배경색*/
     }
-    .container {  /*배경 여백*/
+    .container { /*배경 여백*/
+      border: 2px solid white;
+      margin: 20px;
+      padding: 20px;
+      background: white;
+    }
+    #admin {
+      background: #e5aaa3;
+      padding: 10px;
+    }
 
-            border: 2px solid white;
-            margin: 20px;
-            padding: 20px;
-            background: white ;
-        }
-    #admin { /*admin은 맨 윗줄 쭈아 내전시트*/
-            background: #e5aaa3;
-            padding: 10px; 
-        }
+    #admin ul {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center; /* 가운데 정렬 */
+    }
 
-        #admin ul {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center; /*가운데 정렬!*/
-        }
+    #admin ul li {
+      list-style-type: none; 
+      padding: 0 15px;
+      cursor: pointer;
+    }
 
-        #admin ul li {
-            list-style-type: none; 
-            padding: 0 15px; 
-        }
+    #admin ul li a {
+      font-size: 30px;
+      color: white;
+      text-decoration: none;
+    }
 
-        #admin ul li a {
-            font-size: 30px; /* 메인 폰트 크기  */
-            color: white;
-            text-decoration: none;
-        }
-    th tr:nth-child(even) {/*짝수 줄 마다 색 변경!!*/
-            background: solid black;
-        }
-    
-     tbody tr:hover { /*마우스 가져다 되었을때 효과 주는것!!*/
-            background: pink;
-        }
-        .search-box { /*검색창*/
+    /* Tab 스타일 */
+    .tab-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      margin-right: 10px;
+      cursor: pointer;
+      background-color: #f2f2f2;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .tab.active {
+      background-color: #e5aaa3;
+      color: white;
+    }
+
+    /* 페이지 전환을 위한 CSS */
+    .page {
+      display: none;
+    }
+
+    .active-page {
+      display: block;
+    }
+
+    /* 검색 입력란 스타일 */
+    .search-box {
       margin-bottom: 20px;
       text-align: center;
     }
+
     .search-box input {
       padding: 8px;
       font-size: 16px;
       width: 50%;
       max-width: 400px;
     }
+
+    tbody tr:hover {
+      background: pink;
+    }
   </style>
 </head>
-<body><nav id="admin">
-        <ul>
-            <li><a href="#">쭈아 내전시트</a></li>
-        </ul>
-    </nav>
+<body>
+
+  <nav id="admin">
+    <ul>
+      <li><a href="#">쭈아 내전시트</a></li>
+    </ul>
+  </nav>
+
+  <div class="tab-container">
+    <div class="tab" id="statsTab" onclick="showPage('statsPage')">통계</div>
+    <div class="tab" id="championTab" onclick="showPage('championPage')">챔피언 통계</div>
+  </div>
+
   <div class="container">
-
-    
-  <h2>통계</h2>
-         <div class="search-box">
-           
-      <input type="text" id="statsSearch" placeholder="통계 검색..." onkeyup="filterTable('statsTable', 'statsSearch')">
+    <!-- 통계 페이지 -->
+    <div id="statsPage" class="page active-page">
+      <h2>통계</h2>
+      <div class="search-box">
+        <input type="text" id="statsSearch" placeholder="통계 검색..." onkeyup="filterTable('statsTable', 'statsSearch')">
+      </div>
+      <table id="statsTable"></table>
     </div>
-    
-  <table id="statsTable"></table>
-    
 
-    
-  <h2>챔피언통계</h2>
-        <div class="search-box">
-          
-      <input type="text" id="championSearch" placeholder="챔피언 통계 검색..." onkeyup="filterTable('championTable', 'championSearch')">
+    <!-- 챔피언 통계 페이지 -->
+    <div id="championPage" class="page">
+      <h2>챔피언 통계</h2>
+      <div class="search-box">
+        <input type="text" id="championSearch" placeholder="챔피언 통계 검색..." onkeyup="filterTable('championTable', 'championSearch')">
+      </div>
+      <table id="championTable"></table>
     </div>
-    
-  <table id="championTable"></table>
-    
+  </div>
+
   <script>
+    // 페이지 전환 함수
+    function showPage(pageId) {
+      // 모든 페이지 숨기기
+      var pages = document.querySelectorAll('.page');
+      pages.forEach(function(page) {
+        page.classList.remove('active-page');
+      });
+
+      // 선택된 페이지 보이기
+      var page = document.getElementById(pageId);
+      page.classList.add('active-page');
+
+      // 모든 탭에서 'active' 클래스 제거
+      var tabs = document.querySelectorAll('.tab');
+      tabs.forEach(function(tab) {
+        tab.classList.remove('active');
+      });
+
+      // 클릭된 탭에 'active' 클래스 추가
+      var activeTab = document.getElementById(pageId + 'Tab');
+      activeTab.classList.add('active');
+    }
+
+    // 테이블 생성 함수
     function createTable(data, tableId) {
       var table = document.getElementById(tableId);
       table.innerHTML = "";  // 기존 테이블 내용 지우기
@@ -129,6 +190,7 @@
       }
     }
 
+    // 병합된 셀 확인
     function isMergedCell(row, col, merges) {
       for (var k = 0; k < merges.length; k++) {
         var merge = merges[k];
@@ -140,6 +202,7 @@
       return false;
     }
 
+    // 병합 정보 반환
     function getMergeInfo(row, col, merges) {
       for (var k = 0; k < merges.length; k++) {
         var merge = merges[k];
@@ -150,6 +213,7 @@
       return null;
     }
 
+    // 데이터 로드 함수
     function loadData() {
       // 통계 데이터 불러오기
       fetch('stats.json')
@@ -164,29 +228,28 @@
         .catch(error => console.error('Error loading champion data:', error));
     }
 
+    // 테이블 필터링 함수
     function filterTable(tableId, searchId) {
       var input = document.getElementById(searchId);
       var filter = input.value.toLowerCase();
       var table = document.getElementById(tableId);
       var rows = table.getElementsByTagName("tr");
 
-      // 테이블의 모든 행을 순차적으로 확인
       for (var i = 1; i < rows.length; i++) {
         var cells = rows[i].getElementsByTagName("td");
         var match = false;
 
-        // 각 셀의 내용을 확인
         for (var j = 0; j < cells.length; j++) {
           if (cells[j]) {
             var cellText = cells[j].textContent || cells[j].innerText;
             if (cellText.toLowerCase().indexOf(filter) > -1) {
               match = true;
-              break; // 검색어와 일치하는 셀이 있으면 해당 행을 보이게 함
+              break;
             }
           }
         }
 
-        // 일치하는 셀이 있으면 행을 표시하고, 없으면 숨김
+        // 검색어와 일치하는 셀이 있으면 해당 행을 보이게 함
         if (match) {
           rows[i].style.display = "";
         } else {
@@ -194,7 +257,9 @@
         }
       }
     }
-    window.onload = loadData;  // 페이지 로드 시 데이터 불러오기
+
+    // 페이지 로드 시 데이터 로드
+    window.onload = loadData;
   </script>
 </body>
 </html>
