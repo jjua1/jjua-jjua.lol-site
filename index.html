@@ -45,9 +45,19 @@
             color: white;
             text-decoration: none;
         }
-    tbody tr:hover {
+    tbody tr:hover { /*마우스 가져다 되었을때 효과 주는것!!*/
             background: pink;
         }
+        .search-box {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .search-box input {
+      padding: 8px;
+      font-size: 16px;
+      width: 50%;
+      max-width: 400px;
+    }
   </style>
 </head>
 <body><nav id="admin">
@@ -56,6 +66,9 @@
         </ul>
     </nav>
   <div class="container">
+     <div class="search-box">
+      <input type="text" id="statsSearch" placeholder="통계 검색..." onkeyup="filterTable('statsTable', 'statsSearch')">
+    </div>
   <h2>통계</h2>
   <table id="statsTable"></table>
   <h2>챔피언통계</h2>
