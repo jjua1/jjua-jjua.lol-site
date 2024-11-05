@@ -233,18 +233,20 @@
     }
 
     // 데이터 로드 함수
-    function loadData() {
-      // 통계 데이터 불러오기
-      fetch('stats.json')
-        .then(response => response.json())
-        .then(data => createTable(data, 'statsTable'))
-        .catch(error => console.error('Error loading stats data:', error));
+    async function loadData() {
+      // 구글 드라이브에서 통계 데이터 불러오기
+      let statsUrl = "YOUR_STATS_JSON_LINK";  // 구글 드라이브 JSON 링크
+      let statsData = await fetchData(statsUrl);
+      if (statsData) {
+        createTable(statsData, 'statsTable');
+      }
 
-      // 챔피언통계 데이터 불러오기
-      fetch('champion.json')
-        .then(response => response.json())
-        .then(data => createTable(data, 'championTable'))
-        .catch(error => console.error('Error loading champion data:', error));
+      // 구글 드라이브에서 챔피언통계 데이터 불러오기
+      let championUrl = "YOUR_CHAMPION_JSON_LINK";  // 구글 드라이브 JSON 링크
+      let championData = await fetchData(championUrl);
+      if (championData) {
+        createTable(championData, 'championTable');
+      }
     }
 
     // 테이블 필터링 함수
@@ -279,6 +281,7 @@
 
     // 페이지 로드 시 데이터 로드
     window.onload = loadData;
+   setInterval(loadData, 300000);  // 5분마다 데이터 새로고침
   </script>
 </body>
 </html>
