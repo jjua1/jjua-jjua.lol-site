@@ -235,14 +235,14 @@
     // 데이터 로드 함수
     async function loadData() {
       // 구글 드라이브에서 통계 데이터 불러오기
-      let statsUrl = "https://drive.google.com/file/d/1TQZXDO_xUank46dZG4X22vpb7PrkHygd/view?usp=drive_link";  // 구글 드라이브 JSON 링크
+      let statsUrl = "https://drive.google.com/uc?id=1UkCfP3tpMEZPHNyfUUwkKECE-pVoR9oV&export=download";  // 구글 드라이브 JSON 링크
       let statsData = await fetchData(statsUrl);
       if (statsData) {
         createTable(statsData, 'statsTable');
       }
 
       // 구글 드라이브에서 챔피언통계 데이터 불러오기
-      let championUrl = "https://drive.google.com/file/d/1ZSymWVaouDy8SzX8vyhZcR45u54lr_g-/view?usp=drive_link";  // 구글 드라이브 JSON 링크
+      let championUrl = "https://drive.google.com/uc?id=1Nu488yacZbRgd8c2lNHY_wv5GJ2xKSPw&export=download";  // 구글 드라이브 JSON 링크
       let championData = await fetchData(championUrl);
       if (championData) {
         createTable(championData, 'championTable');
