@@ -92,6 +92,12 @@
     tbody tr:hover {
       background: pink;
     }
+    
+    h2 { /*소제목 스타일 수정!!*/
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
@@ -101,16 +107,17 @@
       <li><a href="#">쭈아 내전시트</a></li>
     </ul>
   </nav>
-<br>
-  <div class="tab-container">
-    <div class="tab" id="statsTab" onclick="showPage('statsPage')">통계</div>
-    <div class="tab" id="championTab" onclick="showPage('championPage')">챔피언 통계</div>
-  </div>
+
 
   <div class="container">
     <!-- 통계 페이지 -->
     <div id="statsPage" class="page active-page">
       <h2>통계</h2>
+<br>
+  <div class="tab-container">
+    <div class="tab" id="statsTab" onclick="showPage('statsPage')">통계</div>
+    <div class="tab" id="championTab" onclick="showPage('championPage')">챔피언 통계</div>
+  </div>
       <div class="search-box">
         <input type="text" id="statsSearch" placeholder="통계 검색..." onkeyup="filterTable('statsTable', 'statsSearch')">
       </div>
@@ -120,6 +127,11 @@
     <!-- 챔피언 통계 페이지 -->
     <div id="championPage" class="page">
       <h2>챔피언 통계</h2>
+      <br>
+  <div class="tab-container">
+    <div class="tab" id="statsTab" onclick="showPage('statsPage')">통계</div>
+    <div class="tab" id="championTab" onclick="showPage('championPage')">챔피언 통계</div>
+  </div>
       <div class="search-box">
         <input type="text" id="championSearch" placeholder="챔피언 통계 검색..." onkeyup="filterTable('championTable', 'championSearch')">
       </div>
