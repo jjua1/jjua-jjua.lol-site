@@ -14,7 +14,7 @@
       text-align: left;
     }
     th {
-      background-color: #f2f2f2; /* 표 맨윗줄 배경색*/
+      background-color: #f2f2f2; /* 표 맨윗줄 배경색!*/
     }
     .container {  /*배경 여백*/
 
@@ -23,7 +23,7 @@
             padding: 20px;
             background: white ;
         }
-    #admin {
+    #admin { /*admin은 맨 윗줄 쭈아 내전시트*/
             background: #e5aaa3;
             padding: 10px; 
         }
@@ -32,7 +32,7 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center; /*가운데 정렬*/
+            justify-content: center; /*가운데 정렬!*/
         }
 
         #admin ul li {
@@ -73,7 +73,11 @@
   <table id="statsTable"></table>
   <h2>챔피언통계</h2>
   <table id="championTable"></table>
-
+    
+<div class="search-box"> /* 검색창! */
+      <input type="text" id="championSearch" placeholder="챔피언 통계 검색..." onkeyup="filterTable('championTable', 'championSearch')">
+    </div>
+    
   <script>
     function createTable(data, tableId) {
       var table = document.getElementById(tableId);
