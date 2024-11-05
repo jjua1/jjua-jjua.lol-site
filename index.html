@@ -2,11 +2,14 @@
 <html>
 <head>
   <title>쭈아 내전시트</title>
+  <!-- Google Fonts 로드 -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
   <style>
     table {
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 20px;
+      font-family: 'Roboto', sans-serif; /* 기본 폰트 */
     }
     th, td {
       border: 1px solid black;
@@ -16,18 +19,17 @@
     th {
       background-color: #f2f2f2; /* 표 맨윗줄 배경색*/
     }
-     td:nth-of-type(even), th:nth-of-type(even) {
-      background-color: solid black; /* 짝수 열의 배경색 */
-    }
     .container { /*배경 여백*/
       border: 2px #ddd;
       margin: 20px;
       padding: 20px;
       background: white;
+      font-family: 'Roboto', sans-serif; /* 기본 폰트 */
     }
     #admin {
       background: #e5aaa3;
       padding: 10px;
+      font-family: 'Poppins', sans-serif; /* 네비게이션 폰트 */
     }
 
     #admin ul {
@@ -47,6 +49,7 @@
       font-size: 30px;
       color: white;
       text-decoration: none;
+      font-family: 'Poppins', sans-serif; /* 네비게이션 폰트 */
     }
 
     /* Tab 스타일 */
@@ -63,6 +66,7 @@
       background-color: #f2f2f2;
       border: 1px solid #ccc;
       border-radius: 5px;
+      font-family: 'Poppins', sans-serif; /* 탭에 Poppins 적용 */
     }
 
     .tab.active {
@@ -90,6 +94,7 @@
       font-size: 16px;
       width: 50%;
       max-width: 400px;
+      font-family: 'Lora', serif; /* 검색 박스에 Lora 적용 */
     }
 
     tbody tr:hover {
@@ -100,6 +105,7 @@
       text-align: center;
       font-size: 24px;
       margin-bottom: 20px;
+      font-family: 'Poppins', sans-serif; /* 제목에 Poppins 적용 */
     }
   </style>
 </head>
