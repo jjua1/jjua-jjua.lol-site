@@ -275,33 +275,35 @@
     }
 
     // 검색 기능
-    function filterTable(tableId, searchInputId) {
-      var input = document.getElementById(searchInputId);
-      var filter = input.value.toLowerCase();
-      var table = document.getElementById(tableId);
-      var rows = table.getElementsByTagName("tr");
+     function filterTable(tableId, searchInputId) {
+  const input = document.getElementById(searchInputId);
+  const filter = input.value.toLowerCase();
+  const table = document.getElementById(tableId);
+  const rows = table.getElementsByTagName("tr");
 
-      for (var i = 0; i < rows.length; i++) {
-        var cells = rows[i].getElementsByTagName("td");
-        var rowVisible = false;
+  for (let i = 1; i < rows.length; i++) { // 첫 행은 헤더이므로 건너뜁니다
+    const cells = rows[i].getElementsByTagName("td");
+    let rowVisible = false;
 
-        for (var j = 0; j < cells.length; j++) {
-          if (cells[j]) {
-            var cellText = cells[j].textContent || cells[j].innerText;
-            if (cellText.toLowerCase().indexOf(filter) > -1) {
-              rowVisible = true;
-              break;
-            }
-          }
-        }
-
-        if (rowVisible) {
-          rows[i].style.display = "";
-        } else {
-          rows[i].style.display = "none";
+    for (let j = 0; j < cells.length; j++) {
+      if (cells[j]) {
+        const cellText = cells[j].textContent || cells[j].innerText;
+        if (cellText.toLowerCase().indexOf(filter) > -1) {
+          rowVisible = true;
+          break;
         }
       }
     }
+
+    if (rowVisible) {
+      rows[i].style.display = "";
+    } else {
+      // 병합된 셀에 영향이 가지 않도록 `visibility: hidden` 사용
+      rows[i].style.visibility = "hidden";
+    }
+  }
+     }
+
 
     // 데이터 로드 함수
     function loadData() {
