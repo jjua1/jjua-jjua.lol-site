@@ -1,323 +1,35 @@
-<!DOCTYPE html>
-<html lang="ko">
+function filterTable(tableId, searchInputId) {
+  var input = document.getElementById(searchInputId);
+  var filter = input.value.toLowerCase();
+  var table = document.getElementById(tableId);
+  var rows = table.getElementsByTagName("tr");
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>쭈아 내전시트</title>
-  <!-- Google Fonts 모양 가져온 것 -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    /* 전체적인 페이지 스타일 */
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f9f0f0;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      cursor: url('https://postfiles.pstatic.net/MjAyMjA2MjdfMjA5/MDAxNjU2MzA5OTkyODA4.GpeW_VYJCika9h4oP31_wBXN0yR1c5Vuo_4QHHEUO-0g.xyXChNpuTZRRqOOJ_5YutuihGHSMN1FAC1lihdMQZucg.GIF.lechance7/%EA%B3%A0%EB%93%B1%EC%96%B4_%EC%97%B0%EA%B2%B02.gif?type=w80_blur'), auto;
-    }
+  for (var i = 0; i < rows.length; i++) {
+    var cells = rows[i].getElementsByTagName("td");
+    var rowVisible = false;
+    var highlightFound = false;
 
-    /* 네비게이션 스타일 */
-    #admin {
-      background: #e5aaa3;
-      padding: 15px;
-      font-family: 'Poppins', sans-serif;
-      text-align: center;
-    }
+    for (var j = 0; j < cells.length; j++) {
+      if (cells[j]) {
+        var cellText = cells[j].textContent || cells[j].innerText;
 
-    #admin ul {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-    }
-
-    #admin ul li {
-      list-style-type: none;
-      padding: 0 20px;
-      cursor: pointer;
-    }
-
-    #admin ul li a {
-      font-size: 24px;
-      color: white;
-      text-decoration: none;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    /* 컨테이너 스타일 */
-    .container {
-      border: 2px solid #ddd;
-      margin: 10px auto;
-      padding: 10px;
-      background: white;
-      max-width: 1200px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    /* 탭 스타일 */
-    .tab-container {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-
-    .tab {
-      padding: 12px 20px;
-      margin-right: 15px;
-      cursor: pointer;
-      background-color: #f8f8f8;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-family: 'Poppins', sans-serif;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .tab:hover {
-      background-color: #e5aaa3;
-      color: white;
-    }
-
-    .tab.active {
-      background-color: #e5aaa3;
-      color: white;
-    }
-
-    /* 페이지 전환 스타일 */
-    .page {
-      display: none;
-    }
-
-    .active-page {
-      display: block;
-    }
-
-    /* 테이블 스타일 */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 30px;
-      font-family: 'Roboto', sans-serif;
-    }
-
-    th,
-    td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-      font-size: 14px;
-    }
-
-    th {
-      background-color: #f8f8f8;
-      color: #333;
-    }
-
-    tbody tr:hover {
-      background-color: #ffe6e6;
-    }
-
-    /* 검색 입력란 스타일 */
-    .search-box {
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .search-box input {
-      padding: 10px;
-      font-size: 16px;
-      width: 50%;
-      max-width: 400px;
-      font-family: 'Lora', serif;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      background-color: #fff8f8;
-    }
-
-    .search-box input:focus {
-      border-color: #e5aaa3;
-      outline: none;
-      box-shadow: 0 0 8px rgba(229, 170, 163, 0.5);
-    }
-
-    /* 헤더 스타일 */
-    h2 {
-      text-align: center;
-      font-size: 28px;
-      margin-bottom: 20px;
-      color: #e5aaa3;
-    }
-
-    /* 테이블에 스크롤 추가 */
-    .table-wrapper {
-      overflow-x: auto;
-      max-width: 100%;
-    }
-  </style>
-</head>
-
-<body>
-  <nav id="admin">
-    <ul>
-      <li><a href="#">쭈아 내전시트</a></li>
-    </ul>
-  </nav>
-
-  <div class="container">
-    <!-- 통계 페이지 -->
-    <div id="statsPage" class="page active-page">
-      <h2>통계</h2>
-      <div class="tab-container">
-        <div class="tab" id="statsTab" onclick="showPage('statsPage')">통계</div>
-        <div class="tab" id="championTab" onclick="showPage('championPage')">챔피언 통계</div>
-      </div>
-
-      <div class="search-box">
-        <input type="text" id="statsSearch" placeholder="통계 검색..." onkeyup="filterTable('statsTable', 'statsSearch')">
-      </div>
-      <div class="table-wrapper">
-        <table id="statsTable"></table>
-      </div>
-    </div>
-
-    <!-- 챔피언 통계 페이지 -->
-    <div id="championPage" class="page">
-      <h2>챔피언 통계</h2>
-      <div class="tab-container">
-        <div class="tab" id="statsTab" onclick="showPage('statsPage')">통계</div>
-        <div class="tab" id="championTab" onclick="showPage('championPage')">챔피언 통계</div>
-      </div>
-      <div class="search-box">
-        <input type="text" id="championSearch" placeholder="챔피언 통계 검색..." onkeyup="filterTable('championTable', 'championSearch')">
-      </div>
-      <div class="table-wrapper">
-        <table id="championTable"></table>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // 페이지 전환 함수
-    function showPage(pageId) {
-      var pages = document.querySelectorAll('.page');
-      pages.forEach(function (page) {
-        page.classList.remove('active-page');
-      });
-
-      var page = document.getElementById(pageId);
-      page.classList.add('active-page');
-
-      var tabs = document.querySelectorAll('.tab');
-      tabs.forEach(function (tab) {
-        tab.classList.remove('active');
-      });
-
-      var activeTab = document.getElementById(pageId + 'Tab');
-      activeTab.classList.add('active');
-    }
-
-    // 테이블 생성 함수
-    function createTable(data, tableId) {
-      var table = document.getElementById(tableId);
-      table.innerHTML = "";
-      var thead = table.createTHead();
-      var tbody = table.createTBody();
-      var merges = data.merges;
-      var formats = data.formats;
-
-      var headerRow = thead.insertRow();
-      data.data[0].forEach(function (header) {
-        var th = document.createElement("th");
-        th.appendChild(document.createTextNode(header));
-        headerRow.appendChild(th);
-      });
-
-      for (var i = 1; i < data.data.length; i++) {
-        var row = tbody.insertRow();
-        for (var j = 0; j < data.data[i].length; j++) {
-          if (!isMergedCell(i + 1, j + 1, merges)) {
-            var cell = row.insertCell();
-            var mergeInfo = getMergeInfo(i + 1, j + 1, merges);
-            if (mergeInfo) {
-              cell.rowSpan = mergeInfo.rowSpan;
-              cell.colSpan = mergeInfo.colSpan;
-            }
-            if (formats[i][j] === "0.00%" && i >= 2) {
-              cell.appendChild(document.createTextNode((data.data[i][j] * 100).toFixed(2) + "%"));
-            } else {
-              cell.appendChild(document.createTextNode(data.data[i][j]));
-            }
-          }
-        }
-      }
-    }
-
-    function isMergedCell(row, col, merges) {
-      for (var k = 0; k < merges.length; k++) {
-        var merge = merges[k];
-        if (row >= merge.row && row < merge.row + merge.numRows &&
-          col >= merge.column && col < merge.column + merge.numColumns) {
-          return true;
-        }
-      }
-      return false;
-    }
-
-    function getMergeInfo(row, col, merges) {
-      for (var k = 0; k < merges.length; k++) {
-        var merge = merges[k];
-        if (row == merge.row && col == merge.column) {
-          return { rowSpan: merge.numRows, colSpan: merge.numColumns };
-        }
-      }
-      return null;
-    }
-
-    // 검색 기능
-    function filterTable(tableId, searchInputId) {
-      var input = document.getElementById(searchInputId);
-      var filter = input.value.toLowerCase();
-      var table = document.getElementById(tableId);
-      var rows = table.getElementsByTagName("tr");
-
-      for (var i = 0; i < rows.length; i++) {
-        var cells = rows[i].getElementsByTagName("td");
-        var rowVisible = false;
-
-        for (var j = 0; j < cells.length; j++) {
-          if (cells[j]) {
-            var cellText = cells[j].textContent || cells[j].innerText;
-            if (cellText.toLowerCase().indexOf(filter) > -1) {
-              rowVisible = true;
-              break;
-            }
-          }
-        }
-
-        if (rowVisible) {
-          rows[i].style.display = "";
+        if (cellText.toLowerCase().indexOf(filter) > -1) {
+          // 검색 키워드가 해당 셀에 있는 경우 강조
+          cells[j].style.backgroundColor = "#ffe6e6"; // 강조 색상 변경
+          rowVisible = true;
+          highlightFound = true;
         } else {
-          rows[i].style.display = "none";
+          // 검색 키워드가 없는 셀은 기본 색상으로 유지
+          cells[j].style.backgroundColor = ""; // 기본 색상으로 리셋
         }
       }
     }
 
-    // 데이터 로드 함수
-    function loadData() {
-      fetch('stats.json')
-        .then(response => response.json())
-        .then(data => createTable(data, 'statsTable'))
-        .catch(error => console.error('Error loading stats data:', error));
-
-      fetch('champion.json')
-        .then(response => response.json())
-        .then(data => createTable(data, 'championTable'))
-        .catch(error => console.error('Error loading champion data:', error));
+    // 해당 행에 검색 결과가 있으면 행을 표시, 없으면 숨기지 않음
+    if (highlightFound) {
+      rows[i].style.display = "";
+    } else {
+      rows[i].style.display = "none";
     }
-
-    window.onload = loadData;
-  </script>
-</body>
-
-</html>
+  }
+}
