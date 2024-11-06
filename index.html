@@ -281,7 +281,17 @@
   const table = document.getElementById(tableId);
   const rows = table.getElementsByTagName("tr");
 
-  for (let i = 1; i < rows.length; i++) { // 첫 행은 헤더이므로 건너뜁니다
+  // 검색어가 없을 때는 모든 행을 표시
+  if (filter === "") {
+    for (let i = 1; i < rows.length; i++) {
+      rows[i].style.display = ""; // 모든 행을 보이도록
+      rows[i].style.visibility = "visible"; // 병합된 셀 문제 대비
+    }
+    return; // 함수 종료
+  }
+
+  // 검색어가 있을 경우 필터링
+  for (let i = 1; i < rows.length; i++) {
     const cells = rows[i].getElementsByTagName("td");
     let rowVisible = false;
 
@@ -296,13 +306,14 @@
     }
 
     if (rowVisible) {
-      rows[i].style.display = "";
+      rows[i].style.display = ""; // 검색 조건에 맞는 행 보이기
+      rows[i].style.visibility = "visible";
     } else {
-      // 병합된 셀에 영향이 가지 않도록 `visibility: hidden` 사용
-      rows[i].style.visibility = "hidden";
+      rows[i].style.display = "none"; // 검색 조건에 맞지 않는 행 숨기기
     }
   }
-     }
+}
+
 
 
     // 데이터 로드 함수
@@ -320,6 +331,6 @@
 
     window.onload = loadData;
   </script>
+  2024-11-06
 </body>
-
 </html>
