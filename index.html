@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
-<html>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
     /* 전체적인 페이지 스타일 */
     body {
       font-family: 'Roboto', sans-serif;
-      background-color: #f9f0f0; /*배경 */
+      background-color: #f9f0f0;
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -19,7 +19,6 @@
     }
 
     /* 네비게이션 스타일 */
-    /* #admin 부분은 위쪽 쭈아내전시트 부분 모양이에요 */
     #admin {
       background: #e5aaa3;
       padding: 15px;
@@ -31,7 +30,7 @@
       margin: 0;
       padding: 0;
       display: flex;
-      justify-content: center; /* 가운데 정렬 */
+      justify-content: center;
     }
 
     #admin ul li {
@@ -47,9 +46,7 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    
     /* 컨테이너 스타일 */
-    /* .container는 표가 딱 안달라붙게 여백 살짝 준거에요! */
     .container {
       border: 2px solid #ddd;
       margin: 10px auto;
@@ -60,7 +57,6 @@
     }
 
     /* 탭 스타일 */
-    /*.tab은 통계랑 챔피언 통계 버튼 모양이에요 이건 나중에 수정해도 되고 아니면 제가 수정 할게요~ */
     .tab-container {
       display: flex;
       justify-content: center;
@@ -89,7 +85,6 @@
     }
 
     /* 페이지 전환 스타일 */
-    /* 이거는 통계랑 챔피언 통계 나눈거에요! 건드리지 말것!! 위쪽 꺼 실행한다 생각하시면 편해요.*/
     .page {
       display: none;
     }
@@ -99,7 +94,6 @@
     }
 
     /* 테이블 스타일 */
-     /* 이건 표 수정이라고 생각하시면 편해요 js 부분때문에 아직 못건드렸어요 ㅠㅠ */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -107,7 +101,8 @@
       font-family: 'Roboto', sans-serif;
     }
 
-    th, td {
+    th,
+    td {
       border: 1px solid #ddd;
       padding: 8px;
       text-align: left;
@@ -119,13 +114,11 @@
       color: #333;
     }
 
-    /* 테이블 행에 호버 효과 */ 
-    tbody tr:hover { //아직 미완성!!
+    tbody tr:hover {
       background-color: #ffe6e6;
     }
 
     /* 검색 입력란 스타일 */
-    /* 여기는 통계 검색 하는곳이에요. 모양 건드려도 괜찮아요!*/
     .search-box {
       margin-bottom: 20px;
       text-align: center;
@@ -149,7 +142,6 @@
     }
 
     /* 헤더 스타일 */
-    /* 여기는 통계나 챔피언 통계 크게 적혀있는걸 뜻해요 */
     h2 {
       text-align: center;
       font-size: 28px;
@@ -158,18 +150,14 @@
     }
 
     /* 테이블에 스크롤 추가 */
-    /* 이거 건드리셔도 괜찮은데 잘못건드리면 화면이 잘려요 */
     .table-wrapper {
       overflow-x: auto;
-      max-width: 100%; /* 화면을 넘지 않게 설정 */
+      max-width: 100%;
     }
-     /* 여기 까지는 스타일 부분이라 직접 꾸미거나 하셔도 괜찮아요~! */
-  
   </style>
 </head>
-  
+
 <body>
-  <!-- 여기서 부터는 웹에 표시되는 글자들 이라고 생각하시면 편해요!! -->
   <nav id="admin">
     <ul>
       <li><a href="#">쭈아 내전시트</a></li>
@@ -208,14 +196,12 @@
       </div>
     </div>
   </div>
-  
-  <!-- 여기 아래서부터는 이제 자바 스크립트(JS부분) 여기서부터 아래쪽으로 보시면 될거같아요~-->
-  
+
   <script>
-    // 페이지 전환 함수 여기서는 쭈아님이 남겨둔걸 바탕으로 만든거에요.
+    // 페이지 전환 함수
     function showPage(pageId) {
       var pages = document.querySelectorAll('.page');
-      pages.forEach(function(page) {
+      pages.forEach(function (page) {
         page.classList.remove('active-page');
       });
 
@@ -223,7 +209,7 @@
       page.classList.add('active-page');
 
       var tabs = document.querySelectorAll('.tab');
-      tabs.forEach(function(tab) {
+      tabs.forEach(function (tab) {
         tab.classList.remove('active');
       });
 
@@ -241,7 +227,7 @@
       var formats = data.formats;
 
       var headerRow = thead.insertRow();
-      data.data[0].forEach(function(header) {
+      data.data[0].forEach(function (header) {
         var th = document.createElement("th");
         th.appendChild(document.createTextNode(header));
         headerRow.appendChild(th);
@@ -271,7 +257,7 @@
       for (var k = 0; k < merges.length; k++) {
         var merge = merges[k];
         if (row >= merge.row && row < merge.row + merge.numRows &&
-            col >= merge.column && col < merge.column + merge.numColumns) {
+          col >= merge.column && col < merge.column + merge.numColumns) {
           return true;
         }
       }
@@ -287,29 +273,37 @@
       }
       return null;
     }
-// 검색 기능 추가
-  function filterTable(tableId, searchInputId) {
-    var input = document.getElementById(searchInputId);
-    var filter = input.value.toLowerCase();
-    var table = document.getElementById(tableId);
-    var rows = table.getElementsByTagName("tr");
 
-    for (var i = 0; i < rows.length; i++) {
-      var cells = rows[i].getElementsByTagName("td");
-      var rowVisible = false;
+    // 검색 기능
+    function filterTable(tableId, searchInputId) {
+      var input = document.getElementById(searchInputId);
+      var filter = input.value.toLowerCase();
+      var table = document.getElementById(tableId);
+      var rows = table.getElementsByTagName("tr");
 
-      for (var j = 0; j < cells.length; j++) {
-        if (cells[j]) {
-          var cellText = cells[j].textContent || cells[j].innerText;
-          if (cellText.toLowerCase().indexOf(filter) > -1) {
-            rowVisible = true;
-            break;
+      for (var i = 0; i < rows.length; i++) {
+        var cells = rows[i].getElementsByTagName("td");
+        var rowVisible = false;
+
+        for (var j = 0; j < cells.length; j++) {
+          if (cells[j]) {
+            var cellText = cells[j].textContent || cells[j].innerText;
+            if (cellText.toLowerCase().indexOf(filter) > -1) {
+              rowVisible = true;
+              break;
+            }
           }
         }
+
+        if (rowVisible) {
+          rows[i].style.display = "";
+        } else {
+          rows[i].style.display = "none";
+        }
       }
-//쭈아님이 수정해야하는곳은 여기 아래!!
-    //여기에서 부터 봐야해야해요! 그리고 아프지마세요 ㅠㅠ
-    
+    }
+
+    // 데이터 로드 함수
     function loadData() {
       fetch('stats.json')
         .then(response => response.json())
@@ -325,4 +319,5 @@
     window.onload = loadData;
   </script>
 </body>
+
 </html>
