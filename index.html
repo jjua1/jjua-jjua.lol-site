@@ -284,26 +284,18 @@
       for (var i = 0; i < rows.length; i++) {
         var cells = rows[i].getElementsByTagName("td");
         var rowVisible = false;
-        var highlightFound = false;
 
         for (var j = 0; j < cells.length; j++) {
           if (cells[j]) {
             var cellText = cells[j].textContent || cells[j].innerText;
-
             if (cellText.toLowerCase().indexOf(filter) > -1) {
-              // 검색 키워드가 해당 셀에 있는 경우 강조
-              cells[j].style.backgroundColor = "#ffe6e6"; // 강조 색상 변경
               rowVisible = true;
-              highlightFound = true;
-            } else {
-              // 검색 키워드가 없는 셀은 기본 색상으로 유지
-              cells[j].style.backgroundColor = ""; // 기본 색상으로 리셋
+              break;
             }
           }
         }
 
-        // 해당 행에 검색 결과가 있으면 행을 표시, 없으면 숨기지 않음
-        if (highlightFound) {
+        if (rowVisible) {
           rows[i].style.display = "";
         } else {
           rows[i].style.display = "none";
